@@ -1,41 +1,10 @@
 <div class="container px-5 px-sm-0">
   <div class="row">
-    <div class="col-md-3">
-      <h2>User info</h2>
-      <%= image_tag @user.get_profile_image(100,100) %>
-      <table class="table">
-        <tbody>
-          <tr></tr>
-          <tr>
-            <th>name</th>
-            <th><%= @user.name %></th>
-          </tr>
-          <tr>
-            <th>introduction</th>
-            <th><%= @user.introduction %></th>
-          </tr>
-        </tbody>
-      </table>
-      <div class="row">
-        <%= link_to edit_user_path(@user), class: "btn btn-outline-secondary btn-block" do %>
-          <i class="fas fa-user-cog" aria-hidden="true"></i>
-        <% end %>
-      </div>
-      <h2 class="mt-3">New book</h2>
-      <%= form_with model: @book do |f| %>
-        <div class="form-group">
-          <%= f.label :title %>
-          <%= f.text_field :title, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.label :opinion %>
-          <%= f.text_area :body, class: "form-control" %>
-        </div>
-        <div class="form-group">
-          <%= f.submit 'Create Book', class: "btn btn-success" %>
-        </div>
-      <% end %>
-    </div>
+
+    <!--user_info left_side-->
+    <%= render 'users/user_info', user: @user, book: @book %>
+
+    <!--user_books right_side-->
     <div class="col-md-8 offset-md-1">
       <h2>Books</h2>
       <table class="table table-hover table-inverse">
@@ -51,13 +20,19 @@
             <tr>
               <td>
                 <%= link_to user_path(@user) do %>
-                  <%= image_tag book.@user.get_profile_image(80,80) %>
+                  <%= image_tag book.user.get_profile_image(80,80) %>
                 <% end %>
               </td>
               <td>
-                <
+                <%= link_to book_path(book.id) do %>
+                  <%= book.title %>
+                <% end %>
+              </td>
+              <td>
+                <%= book.body %>
               </td>
             </tr>
+          <% end %>
         </tbody>
       </table>
 
