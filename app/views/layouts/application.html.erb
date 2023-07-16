@@ -24,6 +24,8 @@
           </button>
           <div class="collapse navbar-collapse show" id="navbarNavDropdawn" style>
             <ul class="navbar-nav ml-auto">
+
+            <!--after_sign_in-->
             <% if user_signed_in? %>
               <li class="nav-item">
                 <%= link_to user_path(current_user.id), class: 'nav-link text-light' do %>
@@ -46,6 +48,7 @@
                 <% end %>
               </li>
 
+            <!--before_sign_in-->
             <% else %>
               <li class="nav-item">
                 <%= link_to root_path, class: 'nav-link text-light' do %>
