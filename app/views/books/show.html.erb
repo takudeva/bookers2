@@ -4,60 +4,69 @@
 
 <div class="container">
   <div class="row">
-
     <!--user_info left_side-->
-    <%= render 'users/user_info', user: @user, book: @book %>
-
+    <div class="col-md-3">
+      <%= render 'users/user_info', user: @user, book: @book %>
+    </div>
     <!--book_detail right_side-->
     <div class="col-md-8 offset-md-1">
-      <h2>Book detail</h2>
-      <table class="table">
-        <tbody>
-          <tr>
-            <td>
-              <%= link_to user_path(@user) do %>
-                <%= image_tag @user.get_profile_image(80,80) %><br>
-                <%= @user.name %>
-              <% end %>
-            </td>
-            <td>
-              <%= link_to book_path(@book.id) do %>
-                <%= @book.title %>
-              <% end %>
-            </td>
-            <td>
-              <%= @book.body %>
-            </td>
-            <td>
-              <% if @book.user == current_user %>
-                <%= link_to "Edit", edit_book_path(@book.id), class: "btn btn-sm btn-success" %>
-              <% end %>
-            </td>
-            <td>
-              <% if @book.user == current_user %>
-              <%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に消しますか？", class: "btn btn-sm btn-danger" %>
-              <% end %>
-            </td>
-            <td id="favorite_buttons_<%= @book.id %>">
-              <%= render 'favorites/favorite', book: @book %>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-      <div>
-        <p>コメント件数：<%= @book.book_comments.count %></p>
-        <% @book.book_comments.each do |book_comment| %>
-          <p><%= image_tag book_comment.user.get_profile_image(100,100) %></p>
+      <div class="row">
+        <h2>Book detail</h2>
+        <table class="table">
+          <tbody>
+            <tr>
+              <td>
+                <%= link_to user_path(@user) do %>
+                  <%= image_tag @user.get_profile_image(80,80) %><br>
+                  <%= @user.name %>
+                <% end %>
+              </td>
+              <td>
+                <%= link_to book_path(@book.id) do %>
+                  <%= @book.title %>
+                <% end %>
+              </td>
+              <td>
+                <%= @book.body %>
+              </td>
+              <td>
+                <% if @book.user == current_user %>
+                  <%= link_to "Edit", edit_book_path(@book.id), class: "btn btn-sm btn-success" %>
+                <% end %>
+              </td>
+              <td>
+                <% if @book.user == current_user %>
+                <%= link_to "Destroy", book_path(@book.id), method: :delete, "data-confirm" => "本当に消しますか？", class: "btn btn-sm btn-danger" %>
+                <% end %>
+              </td>
+              <td id="favorite_buttons_<%= @book.id %>">
+                <%= render 'favorites/favorite', book: @book %>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p>コメント件数：<%= @book.book_comments.count %></p>
+      <% @book.book_comments.each do |book_comment| %>
+      <div class="row mb-2">
+        <div class="col-md-2">
+          <%= image_tag book_comment.user.get_profile_image(100,100) %>
+        </div>
+        <div class="offset-md-1 col-md-9">
           <%= book_comment.user.name %>
           <%= book_comment.created_at.strftime('%Y/%m/%d') %><%= book_comment.comment %>
           <% if book_comment.user == current_user %>
-            <%= link_to "削除", book_book_comments_path(book_comment.book, book_comment), method: :delete %>
+            <%= link_to "Destroy", book_book_comments_path(book_comment.book, book_comment), method: :delete, class: "btn btn-sm btn-danger" %>
           <% end %>
-        <% end %>
+        </div>
       </div>
-      <div>
+      <% end %>
+      <div class="row mt-5">
         <%= form_with model: [@book, @book_comment] do |f| %>
           <%= f.text_area :comment, rows: '5', placeholder: "コメントをここに" %>
           <%= f.submit "送信する" %>
         <% end %>
       </div>
+    </div>
+  </div>
+</div>
